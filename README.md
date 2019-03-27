@@ -20,7 +20,7 @@ Create UI and logic to create new scans
 
 ### General Notes
 
-- The tasks should be delivered by forking this repo and creating a single pull request in the forked repo
+- The tasks should be delivered by forking this repo and inviting us to the forked repo. (Don't create a pull request directly to this repo).
 - Don't hesitate asking follow-up questions
 - No need for extensive testing
 - Feel free to use 3rd party libraries
