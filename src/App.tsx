@@ -1,18 +1,16 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './App.css';
-import ScanContainer from "./ScanContainer";
+import ScanContainer from './ScanContainer';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          Software Challenge
-        </header>
-        <ScanContainer />
-      </div>
-    );
-  }
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        Software Challenge
+      </header>
+      <ScanContainer />
+    </div>
+  );
 }
 
 export default App;

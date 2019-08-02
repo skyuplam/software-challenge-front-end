@@ -1,24 +1,20 @@
-import React from 'react';
+import * as React from 'react';
 import ScanList from './ScanList';
-import {createScanData, createUserData} from './data'
+import { createScanData, createUserData } from './data';
 
 
-class ScanContainer extends React.Component {
-  state = {
-    scans: createScanData(),
-    users: createUserData(),
-  };
+function ScanContainer() {
+  const [scans] = React.useState(createScanData());
+  const [users] = React.useState(createUserData());
 
-  render() {
-    return (
-      <div>
-        <ScanList
-          scans={this.state.scans}
-          users={this.state.users}
-        />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <ScanList
+        scans={scans}
+        users={users}
+      />
+    </div>
+  );
 }
 
 export default ScanContainer;
