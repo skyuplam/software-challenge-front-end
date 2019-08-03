@@ -45,7 +45,7 @@
     "lint:ts": "tsc -p . --noEmit",
     "lint": "run-p lint:*",
     "test": "jest",
-    "pre-commit": "yarn lint",
+    "pre-commit": "yarn lint && yarn test",
     "start": "parcel ./public/index.html"
   },
   "husky": {
