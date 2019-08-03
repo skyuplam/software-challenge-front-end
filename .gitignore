@@ -5,7 +5,7 @@
 node_modules
 
 # generated files
-build/
+dist/
 coverage/
 
 # log
