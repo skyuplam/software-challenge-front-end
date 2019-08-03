@@ -1,5 +1,5 @@
 import { createAction } from 'typesafe-actions';
-import { Scan } from 'Scans';
+import { Scan } from 'Models';
 
 
 export const toggleIsEditingScans = createAction(
@@ -18,4 +18,9 @@ export const updateScan = createAction(
 export const addScan = createAction(
   'scans/ADD_SCAN',
   action => (scan: Scan) => action(scan),
+);
+
+export const updateSortedBy = createAction(
+  'scans/UPDATE_SORTED_BY',
+  action => (sortedBy: string) => action({ sortedBy }),
 );

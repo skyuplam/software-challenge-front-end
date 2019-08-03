@@ -1,5 +1,5 @@
 import { createReducer } from 'typesafe-actions';
-import { User } from 'Users';
+import { User } from 'Models';
 
 
 const usersReducer = createReducer([
