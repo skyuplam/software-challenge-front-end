@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import { createReducer } from 'typesafe-actions';
-// import produce from 'immer';
+import produce from 'immer';
 import { Scan } from 'Models';
-import { updateSortedBy } from './actions';
+import { updateSortedBy, updateScan } from './actions';
 
 
 export const isEditingScans = createReducer(false);
@@ -77,7 +77,19 @@ export const scans = createReducer([
     elevationMin: 9.0,
     scannedByUserId: 2,
   },
-] as Scan[]);
+] as Scan[])
+  .handleAction(
+    updateScan,
+    (state, action) => produce(state, (draft) => {
+      const { payload: { id, name, scannedByUserId } } = action;
+      const scanToUpdate = draft.find(s => s.id === id) || {
+        name: '',
+        scannedByUserId: 0,
+      };
+      scanToUpdate.name = name || scanToUpdate.name;
+      scanToUpdate.scannedByUserId = scannedByUserId || scanToUpdate.scannedByUserId;
+    }),
+  );
 
 const scansReducer = combineReducers({
   isEditingScans,

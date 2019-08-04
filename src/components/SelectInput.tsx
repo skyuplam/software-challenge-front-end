@@ -1,5 +1,6 @@
 import * as React from 'react';
 import cn from 'clsx';
+import { useField } from 'formik';
 
 
 interface Props {
@@ -14,6 +15,21 @@ interface Props {
 function SelectInput({
   label, children, name, id, value, className, onChange,
 }: Props) {
+  const [field, meta] = useField(name);
+  const hasError = meta.touched && meta.error;
+  const ErrorMsg = hasError && (
+    <div className="InputErrorContainer">
+      {meta.error}
+    </div>
+  );
+
+  function handleOnChange(evt: React.ChangeEvent<HTMLSelectElement>) {
+    field.onChange(evt);
+    if (onChange) {
+      onChange(evt);
+    }
+  }
+
   return (
     <div className={cn(className)}>
       <div>
@@ -26,11 +42,13 @@ function SelectInput({
           id={id}
           name={name}
           value={value}
-          onChange={onChange}
+          {...field}
+          onChange={handleOnChange}
         >
           {children}
         </select>
       </div>
+      {ErrorMsg}
     </div>
   );
 }

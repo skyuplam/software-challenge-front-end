@@ -5,7 +5,7 @@ import cn from 'clsx';
 interface Props {
   className?: string;
   children?: React.ReactNode;
-  value: string;
+  value: string | number;
   disabled?: boolean;
   selected?: boolean;
 }
