@@ -10,6 +10,8 @@ import { FormikHelpers } from 'formik';
 import Button from './Button';
 import * as scansActions from '../store/scans/actions';
 import ScanForm from './ScanForm';
+import './ScanItem.css';
+
 
 interface Values {
   name: string;
@@ -54,17 +56,23 @@ function ScanItem({
 
   const ReadItem = !isEditing && (
     <div className="ScanItemRead">
-      <div className="ScanItemName">
-        <span>{scan.name}</span>
-        <div className="ScanItemActions">
-          <Button
-            onClick={handleEditAction}
-          >
-            <Icon size={1} path={mdiPencil} />
-          </Button>
+      <div className="ScanItemContent">
+        <div className="ScanItemName">
+          <span>{scan.name}</span>
+          <span className="ScanItemElevation">
+            ({scan.elevationMin}, {scan.elevationMax})
+          </span>
         </div>
+        {User}
       </div>
-      {User}
+      <div className="ScanItemActions">
+        <Button
+          onClick={handleEditAction}
+          icon
+        >
+          <Icon size={1} path={mdiPencil} />
+        </Button>
+      </div>
     </div>
   );
 

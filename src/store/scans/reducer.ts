@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import { createReducer } from 'typesafe-actions';
 import produce from 'immer';
-import { Scan } from 'Models';
-import { updateSortedBy, updateScan } from './actions';
+import { Scan, SortOrder } from 'Models';
+import { updateSortedBy, updateSortOrder, updateScan } from './actions';
 
 
 export const isEditingScans = createReducer(false);
@@ -11,6 +11,12 @@ export const sortedBy = createReducer('name' as string)
   .handleAction(
     updateSortedBy,
     (_, action) => action.payload.sortedBy,
+  );
+
+export const sortOrder = createReducer('asc' as SortOrder)
+  .handleAction(
+    updateSortOrder,
+    (_, action) => action.payload.order,
   );
 
 export const scans = createReducer([
@@ -94,6 +100,7 @@ export const scans = createReducer([
 const scansReducer = combineReducers({
   isEditingScans,
   sortedBy,
+  sortOrder,
   scans,
 });
 

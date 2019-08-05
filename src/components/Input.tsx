@@ -30,7 +30,7 @@ function Input({
       </div>
       <div className="InputContainer">
         <input
-          id={id}
+          id={id || name}
           name={name}
           className="Input"
           {...field}

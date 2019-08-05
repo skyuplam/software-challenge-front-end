@@ -12,6 +12,11 @@ export const selectSortedBy = createSelector(
   scans => scans.sortedBy,
 );
 
+export const selectSortOrder = createSelector(
+  selectScans,
+  scans => scans.sortOrder,
+);
+
 export const selectScanList = createSelector(
   selectScans,
   selectUsers,
@@ -26,5 +31,6 @@ export const selectScanList = createSelector(
 export const selectSortedScans = createSelector(
   selectScanList,
   selectSortedBy,
-  (scans, sortedBy) => orderBy(scans, sortedBy),
+  selectSortOrder,
+  (scans, sortedBy, sortOrder) => orderBy(scans, sortedBy, sortOrder),
 );

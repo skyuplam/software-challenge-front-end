@@ -11,4 +11,5 @@ declare module 'Models' {
     scannedByUserId: number;
     scannedByUser?: User;
   }
+  export type SortOrder = 'asc' | 'desc';
 }
