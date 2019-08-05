@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { createReducer } from 'typesafe-actions';
 import produce from 'immer';
 import { Scan, SortOrder } from 'Models';
-import { updateSortedBy, updateSortOrder, updateScan } from './actions';
+import { updateSortedBy, updateSortOrder, updateScan, addScan } from './actions';
 
 
 export const isEditingScans = createReducer(false);
@@ -94,6 +94,12 @@ export const scans = createReducer([
       };
       scanToUpdate.name = name || scanToUpdate.name;
       scanToUpdate.scannedByUserId = scannedByUserId || scanToUpdate.scannedByUserId;
+    }),
+  )
+  .handleAction(
+    addScan,
+    (state, action) => produce(state, draft => {
+      draft.push(action.payload);
     }),
   );
 

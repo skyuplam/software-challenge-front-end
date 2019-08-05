@@ -7,6 +7,7 @@ import {
   selectSortedScans, selectSortedBy, selectSortOrder,
 } from './store/scans/selectors';
 import * as scansActions from './store/scans/actions';
+import { Scan } from 'Models';
 
 
 type SortOrder = ReturnType<typeof selectSortOrder>;
@@ -16,9 +17,10 @@ interface Props {
   sortedBy: string;
   sortOrder: SortOrder;
   updateSortOrder: (sortOrder: SortOrder) => void;
+  addScan: (scan: Scan) => void;
 }
 function ScanContainer({
-  scans, sortBy, sortedBy, sortOrder, updateSortOrder,
+  scans, sortBy, sortedBy, sortOrder, updateSortOrder, addScan,
 }: Props) {
   return (
     <div>
@@ -28,6 +30,7 @@ function ScanContainer({
         sortedBy={sortedBy}
         sortOrder={sortOrder}
         updateSortOrder={updateSortOrder}
+        addScan={addScan}
       />
     </div>
   );
@@ -45,6 +48,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   updateSortOrder: (sortOrder: SortOrder) => {
     dispatch(scansActions.updateSortOrder(sortOrder));
+  },
+  addScan: (scan: Scan) => {
+    dispatch(scansActions.addScan(scan));
   },
 });
 

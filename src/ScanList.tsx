@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Icon from '@mdi/react';
 import { mdiPlus, mdiSortAscending, mdiSortDescending } from '@mdi/js';
 import { Scan, SortOrder } from 'Models';
 import { get } from 'lodash';
+import cuid from 'cuid';
 
 import List from './components/List';
 import ListItem from './components/ListItem';
@@ -10,7 +11,9 @@ import ScanItem from './components/ScanItem';
 import Button from './components/Button';
 import Select from './components/Select';
 import Option from './components/Option';
+import ScanForm, { ScanFormValues } from './components/ScanForm';
 import './ScanList.css';
+import { FormikHelpers } from 'formik';
 
 
 interface Props {
@@ -19,11 +22,13 @@ interface Props {
   sortedBy: string;
   sortOrder: SortOrder;
   updateSortOrder: (sortOrder: SortOrder) => void;
+  addScan: (scan: Scan) => void;
 }
 
 function ScanList({
-  scans, sortBy, sortedBy, sortOrder, updateSortOrder,
+  scans, sortBy, sortedBy, sortOrder, updateSortOrder, addScan,
 }: Props) {
+  const [showScanForm, setShowScanForm] = useState(false);
   const sortOptions = [
     { label: 'Name', value: 'name' },
     { label: 'Username', value: 'scannedByUser.name' },
@@ -44,6 +49,25 @@ function ScanList({
     updateSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   }
 
+  function toggleShowScanForm() {
+    setShowScanForm(!showScanForm);
+  }
+
+  function handleSubmit(
+    values: ScanFormValues,
+    actions: FormikHelpers<ScanFormValues>,
+  ) {
+    addScan({
+      id: cuid(),
+      name: values.name,
+      scannedByUserId: parseInt(values.scannedByUserId, 10),
+      elevationMin: values.elevationMin || 0,
+      elevationMax: values.elevationMax || 0,
+    });
+    actions.setSubmitting(false);
+    toggleShowScanForm();
+  }
+
   return (
     <div>
       <div className="Header">
@@ -55,31 +79,49 @@ function ScanList({
             className="ScanListItem"
           >
             <div className="ScanListHeader">
-              <Select
-                label="Sort by"
-                name="sortedBy"
-                value={sortedBy}
-                onChange={changeSortedBy}
-              >
-                {sortOptions.map((opt) => (
-                  <Option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </Option>
-                ))}
-              </Select>
-              <Button
-                className="ScanListSortOrderButton"
-                onClick={toggleSortOrder}
-                icon
-              >
-                {SortOrderIcon}
-              </Button>
-              <Button
-                className="ScanListAddButton"
-                icon
-              >
-                <Icon size={1} path={mdiPlus} />
-              </Button>
+              <div className="ScanListControllers">
+                <Select
+                  label="Sort by"
+                  name="sortedBy"
+                  value={sortedBy}
+                  onChange={changeSortedBy}
+                >
+                  {sortOptions.map((opt) => (
+                    <Option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </Option>
+                  ))}
+                </Select>
+                <Button
+                  className="ScanListSortOrderButton"
+                  onClick={toggleSortOrder}
+                  icon
+                >
+                  {SortOrderIcon}
+                </Button>
+                <Button
+                  className="ScanListAddButton"
+                  icon
+                  onClick={toggleShowScanForm}
+                >
+                  <Icon size={1} path={mdiPlus} />
+                </Button>
+              </div>
+              <div className="ScanListNewScanForm">
+                {showScanForm && (
+                  <ScanForm
+                    onSubmit={handleSubmit}
+                    initialValues={{
+                      name: '',
+                      scannedByUserId: '0',
+                      elevationMin: 0,
+                      elevationMax: 0,
+                    }}
+                    onCancel={toggleShowScanForm}
+                    isAdd
+                  />
+                )}
+              </div>
             </div>
           </ListItem>
           {scans.map((scan, i) => (

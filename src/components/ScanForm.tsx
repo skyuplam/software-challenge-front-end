@@ -5,15 +5,15 @@ import UserSelection from './UserSelection';
 import Button from './Button';
 
 
-interface Values {
+export interface ScanFormValues {
   name: string;
   scannedByUserId: string;
   elevationMax?: number;
   elevationMin?: number;
 }
 interface Props {
-  onSubmit: (values: Values, actions: FormikHelpers<Values>) => void;
-  initialValues: Values;
+  onSubmit: (values: ScanFormValues, actions: FormikHelpers<ScanFormValues>) => void;
+  initialValues: ScanFormValues;
   onCancel: () => void;
   isAdd?: boolean;
 }
