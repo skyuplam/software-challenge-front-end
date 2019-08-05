@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { RootState } from 'typesafe-actions';
-import ScanList from './ScanList';
+import ScanList from './components/ScanList';
 import {
   selectSortedScans, selectSortedBy, selectSortOrder,
 } from './store/scans/selectors';

@@ -5,13 +5,13 @@ import { Scan, SortOrder } from 'Models';
 import { get } from 'lodash';
 import cuid from 'cuid';
 
-import List from './components/List';
-import ListItem from './components/ListItem';
-import ScanItem from './components/ScanItem';
-import Button from './components/Button';
-import Select from './components/Select';
-import Option from './components/Option';
-import ScanForm, { ScanFormValues } from './components/ScanForm';
+import List from './List';
+import ListItem from './ListItem';
+import ScanItem from './ScanItem';
+import Button from './Button';
+import Select from './Select';
+import Option from './Option';
+import ScanForm, { ScanFormValues } from './ScanForm';
 import './ScanList.css';
 import { FormikHelpers } from 'formik';
 
