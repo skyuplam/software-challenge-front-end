@@ -9,14 +9,10 @@ import { FormikHelpers } from 'formik';
 
 import Button from './Button';
 import * as scansActions from '../store/scans/actions';
-import ScanForm from './ScanForm';
+import ScanForm, { ScanFormValues } from './ScanForm';
 import './ScanItem.css';
 
 
-interface Values {
-  name: string;
-  scannedByUserId: string;
-}
 interface Props {
   scan: Scan;
   updateScan: (id: string, name: string, scannedByUserId: number) => void;
@@ -42,8 +38,8 @@ function ScanItem({
   }
 
   function handleSubmit(
-    values: Values,
-    actions: FormikHelpers<Values>,
+    values: ScanFormValues,
+    actions: FormikHelpers<ScanFormValues>,
   ) {
     updateScan(
       scan.id,

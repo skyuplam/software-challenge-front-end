@@ -4,18 +4,19 @@ import { useField } from 'formik';
 import './Input.css';
 
 
-interface Props {
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   label?: React.ReactNode;
   id?: string;
   name: string;
+  onChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 }
 function Input({
-  className, label, id, name,
+  className, label, id, name, onChange, ...rest
 }: Props) {
   const [field, meta] = useField(name);
   const [focused, setFocused] = useState(false);
-  const { onBlur, ...restField } = field;
+  const { onBlur, onChange: onFieldChange, ...restField } = field;
 
   const hasError = meta.touched && meta.error;
   const ErrorMsg = hasError && (
@@ -31,6 +32,14 @@ function Input({
   function handleOnBlur(evt: React.FocusEvent<HTMLInputElement>) {
     setFocused(false);
     onBlur(evt);
+  }
+
+  function handleOnChange(evt: React.ChangeEvent<HTMLInputElement>) {
+    if (onChange) {
+      onChange(evt);
+    }
+
+    onFieldChange(evt);
   }
 
   return (
@@ -49,8 +58,10 @@ function Input({
           id={id || name}
           name={name}
           className="InputBase"
+          {...rest}
           onFocus={handleOnFocus}
           onBlur={handleOnBlur}
+          onChange={handleOnChange}
           {...restField}
         />
       </div>

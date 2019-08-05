@@ -1,16 +1,16 @@
 import React from 'react';
-import { Formik, FormikHelpers, Form } from 'formik';
+import { Formik, FormikHelpers, Form, FormikProps } from 'formik';
+import { reduce, kebabCase, capitalize, split, isEmpty } from 'lodash';
 import Input from './Input';
 import UserSelection from './UserSelection';
 import Button from './Button';
 import './ScanForm.css';
 
-
 export interface ScanFormValues {
   name: string;
   scannedByUserId: string;
-  elevationMax?: number;
-  elevationMin?: number;
+  elevationMax?: string;
+  elevationMin?: string;
 }
 interface Props {
   onSubmit: (
@@ -21,22 +21,27 @@ interface Props {
   onCancel: () => void;
   isAdd?: boolean;
 }
+type Error = Record<string, string>;
 function ScanForm({ onSubmit, initialValues, onCancel, isAdd }: Props) {
-  const OtherFields = isAdd && (
-    <div className="ScanFormElevationGroup">
-      <Input
-        label="Elevation Min"
-        name="elevationMin"
-      />
-      <Input
-        label="Elevation Max"
-        name="elevationMax"
-      />
-    </div>
-  );
+  function handleValidate({
+    name, elevationMin, elevationMax,
+  }: ScanFormValues) {
+    const reduceErrors = (errs: Error, err: Error | {} | void) => ({ ...errs, ...err });
+    const isNan = (num?: string) => num && Number.isNaN(parseFloat(num));
+    const keyToName = (key: string) => split(kebabCase(key), '-').map(capitalize).join(' ');
 
-  function handleValidate({ name }: ScanFormValues) {
-    return name ? {} : { name: 'Scan name is required!' };
+    const elevationErrs = isAdd ? reduce(
+      { elevationMax, elevationMin },
+      (errs, value, key) => [
+        !value && { [key]: [keyToName(key), 'is required!'].join(' ') },
+        isNan(value) && { [key]: [keyToName(key), 'is not a number!'].join(' ') },
+      ].filter(Boolean).reduce(reduceErrors, errs),
+      {},
+    ) : {};
+
+    const nameErr = !name ? { name: 'Scan Name is required!' } : {};
+
+    return { ...nameErr, ...elevationErrs };
   }
 
   return (
@@ -45,7 +50,7 @@ function ScanForm({ onSubmit, initialValues, onCancel, isAdd }: Props) {
       onSubmit={onSubmit}
       validate={handleValidate}
     >
-      {() => (
+      {({ touched, isValid }: FormikProps<ScanFormValues>) => (
         <Form
           className="ScanForm"
         >
@@ -53,7 +58,20 @@ function ScanForm({ onSubmit, initialValues, onCancel, isAdd }: Props) {
             label="Scan Name"
             name="name"
           />
-          {OtherFields}
+          {isAdd && (
+            <div className="ScanFormElevationGroup">
+              <Input
+                type="tel"
+                label="Elevation Min"
+                name="elevationMin"
+              />
+              <Input
+                type="tel"
+                label="Elevation Max"
+                name="elevationMax"
+              />
+            </div>
+          )}
           <UserSelection
             name="scannedByUserId"
           />
@@ -66,6 +84,7 @@ function ScanForm({ onSubmit, initialValues, onCancel, isAdd }: Props) {
             </Button>
             <Button
               type="submit"
+              disabled={isEmpty(touched) || !isValid}
               primary
             >
               Save

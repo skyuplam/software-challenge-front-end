@@ -3,7 +3,7 @@ import cn from 'clsx';
 import './Button.css';
 
 
-interface Props {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   children?: React.ReactNode;
   type?: 'button' | 'reset' | 'submit';
@@ -12,7 +12,7 @@ interface Props {
   primary?: boolean;
 }
 function Button({
-  children, className, type, onClick, icon, primary,
+  children, className, type, onClick, icon, primary, ...rest
 }: Props) {
   return (
     <button
@@ -28,6 +28,7 @@ function Button({
       )}
       type={type || 'button'}
       onClick={onClick}
+      {...rest}
     >
       <div className="ButtonContent">
         {children}

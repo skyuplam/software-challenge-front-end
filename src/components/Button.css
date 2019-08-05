@@ -36,6 +36,13 @@
   letter-spacing: 0.02857em;
 }
 
+.Button[disabled] {
+  opacity: 0.26;
+  box-shadow: none;
+  cursor: default;
+  pointer-events: none;
+}
+
 .ButtonIcon {
   fill: white;
   padding: 12px;

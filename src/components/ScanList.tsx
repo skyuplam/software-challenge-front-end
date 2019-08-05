@@ -57,8 +57,10 @@ function ScanList({
       id: cuid(),
       name: values.name,
       scannedByUserId: parseInt(values.scannedByUserId, 10),
-      elevationMin: values.elevationMin || 0,
-      elevationMax: values.elevationMax || 0,
+      elevationMin: values.elevationMin
+        ? parseFloat(values.elevationMin) : 0,
+      elevationMax: values.elevationMax
+        ? parseFloat(values.elevationMax) : 0,
     });
     actions.setSubmitting(false);
     toggleShowScanForm();
@@ -120,8 +122,8 @@ function ScanList({
                     initialValues={{
                       name: '',
                       scannedByUserId: '0',
-                      elevationMin: 0,
-                      elevationMax: 0,
+                      elevationMin: '',
+                      elevationMax: '',
                     }}
                     onCancel={toggleShowScanForm}
                     isAdd
