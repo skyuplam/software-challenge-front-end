@@ -93,7 +93,9 @@ export const scans = createReducer([
         scannedByUserId: 0,
       };
       scanToUpdate.name = name || scanToUpdate.name;
-      scanToUpdate.scannedByUserId = scannedByUserId || scanToUpdate.scannedByUserId;
+      scanToUpdate.scannedByUserId = typeof scannedByUserId === 'undefined'
+        ? scanToUpdate.scannedByUserId
+        : scannedByUserId;
     }),
   )
   .handleAction(
