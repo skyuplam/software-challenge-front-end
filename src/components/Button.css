@@ -19,14 +19,35 @@
   font-size: inherit;
 }
 
+.ButtonBase:hover,
+.ButtonBase:focus {
+  box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 3px 1px -2px rgba(0,0,0,0.12);
+}
+
+.Button {
+  padding: 6px 16px;
+  font-size: inherit;
+  min-width: 64px;
+  box-sizing: border-box;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  font-weight: 500;
+  line-height: 1.75;
+  border-radius: 4px;
+  letter-spacing: 0.02857em;
+}
+
 .ButtonIcon {
   fill: white;
   padding: 12px;
   overflow: visible;
-  font-size: 1.5rem;
+  font-size: inherit;
   text-align: center;
   transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   border-radius: 50%;
+}
+
+.ButtonPrimary {
+  background-color: #00000c;
 }
 
 .ButtonContent {

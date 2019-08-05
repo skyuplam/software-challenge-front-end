@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Icon from '@mdi/react';
-import { mdiPlus, mdiSortAscending, mdiSortDescending } from '@mdi/js';
+import { mdiPlus, mdiSortAscending } from '@mdi/js';
 import { Scan, SortOrder } from 'Models';
 import { get } from 'lodash';
 import cuid from 'cuid';
@@ -36,10 +36,6 @@ function ScanList({
     { label: 'Elevation Min', value: 'elevationMin' },
   ];
 
-  const SortAsc = (<Icon size={1} path={mdiSortAscending} />);
-  const SortDesc = (<Icon size={1} path={mdiSortDescending} />);
-  const SortOrderIcon = sortOrder === 'asc' ? SortAsc : SortDesc;
-
   function changeSortedBy(evt: React.ChangeEvent<HTMLSelectElement>) {
     const sortedBy = get(evt, 'target.value');
     sortBy(sortedBy);
@@ -74,7 +70,7 @@ function ScanList({
         Scans:
       </div>
       <div className="ScanList">
-        <List key={sortedBy}>
+        <List key={[sortedBy, sortOrder].join('-')}>
           <ListItem
             className="ScanListItem"
           >
@@ -97,14 +93,24 @@ function ScanList({
                   onClick={toggleSortOrder}
                   icon
                 >
-                  {SortOrderIcon}
+                  <Icon
+                    size={1}
+                    path={mdiSortAscending}
+                    vertical={sortOrder === 'desc'}
+                    className="ScanListSortOrderIcon"
+                  />
                 </Button>
                 <Button
                   className="ScanListAddButton"
                   icon
                   onClick={toggleShowScanForm}
                 >
-                  <Icon size={1} path={mdiPlus} />
+                  <Icon
+                    size={1}
+                    path={mdiPlus}
+                    rotate={showScanForm ? 45 : 0}
+                    className="ScanListAddIcon"
+                  />
                 </Button>
               </div>
               <div className="ScanListNewScanForm">

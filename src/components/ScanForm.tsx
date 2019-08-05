@@ -3,6 +3,7 @@ import { Formik, FormikHelpers, Form } from 'formik';
 import Input from './Input';
 import UserSelection from './UserSelection';
 import Button from './Button';
+import './ScanForm.css';
 
 
 export interface ScanFormValues {
@@ -12,7 +13,10 @@ export interface ScanFormValues {
   elevationMin?: number;
 }
 interface Props {
-  onSubmit: (values: ScanFormValues, actions: FormikHelpers<ScanFormValues>) => void;
+  onSubmit: (
+    values: ScanFormValues,
+    actions: FormikHelpers<ScanFormValues>,
+  ) => void;
   initialValues: ScanFormValues;
   onCancel: () => void;
   isAdd?: boolean;
@@ -30,13 +34,21 @@ function ScanForm({ onSubmit, initialValues, onCancel, isAdd }: Props) {
       />
     </div>
   );
+
+  function handleValidate({ name }: ScanFormValues) {
+    return name ? {} : { name: 'Scan name is required!' };
+  }
+
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
+      validate={handleValidate}
     >
       {() => (
-        <Form>
+        <Form
+          className="ScanForm"
+        >
           <Input
             label="Scan Name"
             name="name"
@@ -45,7 +57,7 @@ function ScanForm({ onSubmit, initialValues, onCancel, isAdd }: Props) {
           <UserSelection
             name="scannedByUserId"
           />
-          <div className="ScanItemEditActions">
+          <div className="ScanFormActions">
             <Button
               type="button"
               onClick={onCancel}
@@ -54,6 +66,7 @@ function ScanForm({ onSubmit, initialValues, onCancel, isAdd }: Props) {
             </Button>
             <Button
               type="submit"
+              primary
             >
               Save
             </Button>

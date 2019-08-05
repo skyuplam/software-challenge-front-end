@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cn from 'clsx';
 import { useField } from 'formik';
+import './Input.css';
 
 
 interface Props {
@@ -13,6 +14,8 @@ function Input({
   className, label, id, name,
 }: Props) {
   const [field, meta] = useField(name);
+  const [focused, setFocused] = useState(false);
+  const { onBlur, ...restField } = field;
 
   const hasError = meta.touched && meta.error;
   const ErrorMsg = hasError && (
@@ -21,6 +24,15 @@ function Input({
     </div>
   );
 
+  function handleOnFocus() {
+    setFocused(true);
+  }
+
+  function handleOnBlur(evt: React.FocusEvent<HTMLInputElement>) {
+    setFocused(false);
+    onBlur(evt);
+  }
+
   return (
     <div className={cn('InputRoot', className)}>
       <div className="InputLabelContainer">
@@ -28,12 +40,18 @@ function Input({
           {label}
         </label>
       </div>
-      <div className="InputContainer">
+      <div className={cn(
+        'InputContainer',
+        'InputUnderline',
+        { 'InputFocused': focused },
+      )}>
         <input
           id={id || name}
           name={name}
-          className="Input"
-          {...field}
+          className="InputBase"
+          onFocus={handleOnFocus}
+          onBlur={handleOnBlur}
+          {...restField}
         />
       </div>
       {ErrorMsg}

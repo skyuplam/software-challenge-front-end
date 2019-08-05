@@ -1,6 +1,10 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import cn from 'clsx';
 import { FieldInputProps } from 'formik';
+import Icon from '@mdi/react';
+import { mdiMenuDown } from '@mdi/js';
+import './Select.css';
+import './Input.css';
 
 
 type Value = string | string[] | number;
@@ -18,6 +22,7 @@ export interface SelectProps {
 function SelectInput({
   label, children, name, id, value, className, onChange, inputProps, error,
 }: SelectProps) {
+  const [focused, setFocused] = useState(false);
 
   function handleOnChange(evt: React.ChangeEvent<HTMLSelectElement>) {
     if (onChange) {
@@ -25,8 +30,20 @@ function SelectInput({
     }
   }
 
+  function handleOnFocus() {
+    setFocused(true);
+  }
+
+  function handleOnBlur(evt: React.FocusEvent<HTMLSelectElement>) {
+    const { onBlur = undefined } = inputProps || {};
+    setFocused(false);
+    if (onBlur) {
+      onBlur(evt);
+    }
+  }
+
   return (
-    <div className={cn(className)}>
+    <div className={cn('Select', className)}>
       {label && (
         <div>
           <label htmlFor={id || name}>
@@ -34,16 +51,24 @@ function SelectInput({
           </label>
         </div>
       )}
-      <div>
+      <div className={cn(
+        'InputContainer',
+        'InputUnderline',
+        { 'InputFocused': focused },
+      )}>
         <select
           id={id || name}
           name={name}
           value={value}
           onChange={handleOnChange}
+          className={cn('SelectSelect', 'InputBase')}
+          onFocus={handleOnFocus}
           {...inputProps}
+          onBlur={handleOnBlur}
         >
           {children}
         </select>
+        <Icon className="SelectIcon" size={1} path={mdiMenuDown} />
       </div>
       {error && (
         <div className="InputErrorContainer">

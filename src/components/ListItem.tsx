@@ -12,7 +12,7 @@ export default function ListItem({
 }: Props) {
   return (
     <li
-      className={cn('listitem-root', className)}
+      className={cn('ListItem', className)}
     >
       {children}
     </li>

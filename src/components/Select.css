@@ -1,0 +1,27 @@
+.Select {
+  display: inline-flex;
+  align-items: baseline;
+}
+.SelectSelect {
+  cursor: pointer;
+  min-width: 1rem;
+  user-select: none;
+  border-radius: 0;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  padding-right: 1.5rem;
+}
+
+.SelectSelect:not([multiple]) option,
+.SelectSelect:not([multiple]) optgroup {
+  background-color: #fff;
+}
+
+.SelectIcon {
+  top: calc(50% - 0.75rem);
+  color: #fff;
+  fill: currentColor;
+  right: 0;
+  position: absolute;
+  pointer-events: none;
+}

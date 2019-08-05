@@ -12,7 +12,7 @@ export default function List({
 }: Props) {
   return (
     <ul
-      className={cn('list-root', className)}
+      className={cn('List', className)}
     >
       {children}
     </ul>
