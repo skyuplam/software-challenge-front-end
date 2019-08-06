@@ -1,9 +1,10 @@
 import React from 'react';
 import { Formik, FormikHelpers, Form, FormikProps } from 'formik';
-import { reduce, kebabCase, capitalize, split, isEmpty } from 'lodash';
+import { reduce, isEmpty } from 'lodash';
 import Input from './Input';
-import UserSelection from './UserSelection';
+import UserSelection from '../containers/UserSelection';
 import Button from './Button';
+import { keyToName, isNan } from '../utils/string';
 import './ScanForm.css';
 
 export interface ScanFormValues {
@@ -26,15 +27,17 @@ function ScanForm({ onSubmit, initialValues, onCancel, isAdd }: Props) {
   function handleValidate({
     name, elevationMin, elevationMax,
   }: ScanFormValues) {
-    const reduceErrors = (errs: Error, err: Error | {} | void) => ({ ...errs, ...err });
-    const isNan = (num?: string) => num && Number.isNaN(parseFloat(num));
-    const keyToName = (key: string) => split(kebabCase(key), '-').map(capitalize).join(' ');
+    const reduceErrors = (errs: Error, err: Error | {} | void) =>
+      ({ ...errs, ...err });
 
+    // Validate elevation, skip it if it's a edit form
     const elevationErrs = isAdd ? reduce(
       { elevationMax, elevationMin },
       (errs, value, key) => [
         !value && { [key]: [keyToName(key), 'is required!'].join(' ') },
-        isNan(value) && { [key]: [keyToName(key), 'is not a number!'].join(' ') },
+        isNan(value) && {
+          [key]: [keyToName(key), 'is not a number!'].join(' '),
+        },
       ].filter(Boolean).reduce(reduceErrors, errs),
       {},
     ) : {};

@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import SelectInput from './SelectInput';
 import { RootState } from 'typesafe-actions';
 import { User } from 'Models';
-import Option from './Option';
+import SelectInput from '../components/SelectInput';
+import Option from '../components/Option';
 import { selectUsers } from '../store/users/selectors';
 
 

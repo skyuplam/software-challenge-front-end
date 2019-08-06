@@ -2,12 +2,12 @@ import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { RootState } from 'typesafe-actions';
-import ScanList from './components/ScanList';
+import { Scan } from 'Models';
+import ScanList from '../components/ScanList';
 import {
   selectSortedScans, selectSortedBy, selectSortOrder,
-} from './store/scans/selectors';
-import * as scansActions from './store/scans/actions';
-import { Scan } from 'Models';
+} from '../store/scans/selectors';
+import * as scansActions from '../store/scans/actions';
 
 
 type SortOrder = ReturnType<typeof selectSortOrder>;

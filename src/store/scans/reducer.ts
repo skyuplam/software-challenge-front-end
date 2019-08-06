@@ -5,8 +5,6 @@ import { Scan, SortOrder } from 'Models';
 import { updateSortedBy, updateSortOrder, updateScan, addScan } from './actions';
 
 
-export const isEditingScans = createReducer(false);
-
 export const sortedBy = createReducer('name' as string)
   .handleAction(
     updateSortedBy,
@@ -106,7 +104,6 @@ export const scans = createReducer([
   );
 
 const scansReducer = combineReducers({
-  isEditingScans,
   sortedBy,
   sortOrder,
   scans,

@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import ScanContainer from './ScanContainer';
+import ScanContainer from './containers/ScanContainer';
 
 function App() {
   return (
